@@ -1,4 +1,5 @@
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 import static io.restassured.RestAssured.given;
 
+@Story("Логин пользователя")
 public class LoginTest {
 
     private String password;
