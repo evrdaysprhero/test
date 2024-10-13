@@ -1,14 +1,11 @@
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import pojo.RegisterRequest;
-
-import static io.restassured.RestAssured.given;
 
 @RunWith(Parameterized.class)
 @Feature(value = "Не заполнено одно из обязательных полей")
