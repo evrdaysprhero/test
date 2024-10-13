@@ -57,12 +57,4 @@ public class RegisterParamsTest {
 
     }
 
-    @After
-    public void deleteUser() {
-        String accessToken = MakeOrderTest.authUser(password, email);
-        given()
-                .header("authorization", accessToken)
-                .delete("/api/auth/user");
-    }
-
 }
