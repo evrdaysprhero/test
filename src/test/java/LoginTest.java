@@ -35,7 +35,7 @@ public class LoginTest {
     }
 
     @Step("Вызов /api/auth/register")
-    public Response postLogin(LoginRequest loginRequest) {
+    public static Response postLogin(LoginRequest loginRequest) {
         return given()
                 .header("Content-type", "application/json")
                 .body(loginRequest)
