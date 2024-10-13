@@ -4,6 +4,7 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,6 +97,21 @@ public class PatchUserTest {
                 .then()
                 .assertThat()
                 .statusCode(401);
+
+    }
+
+    @After
+    public void deleteUser() {
+        String accessToken = MakeOrderTest.authUser(password, email);
+        if(accessToken!=null) {
+            given()
+                    .header("authorization", accessToken)
+                    .delete("/api/auth/user");
+        } else {
+            given()
+                    .header("authorization", MakeOrderTest.authUser(password, email + "text"))
+                    .delete("/api/auth/user");
+        }
 
     }
 }

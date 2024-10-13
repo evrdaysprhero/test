@@ -1,11 +1,14 @@
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import pojo.RegisterRequest;
+
+import static io.restassured.RestAssured.given;
 
 @RunWith(Parameterized.class)
 @Feature(value = "Не заполнено одно из обязательных полей")
@@ -52,6 +55,14 @@ public class RegisterParamsTest {
         RegisterTest.checkResponseCode(response,403);
         RegisterTest.checkResponseMessage(response, "Email, password and name are required fields");
 
+    }
+
+    @After
+    public void deleteUser() {
+        String accessToken = MakeOrderTest.authUser(password, email);
+        given()
+                .header("authorization", accessToken)
+                .delete("/api/auth/user");
     }
 
 }

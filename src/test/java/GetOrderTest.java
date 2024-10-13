@@ -4,6 +4,7 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,5 +91,13 @@ public class GetOrderTest {
                 .as(GetOrderResponse.class);
         Assert.assertTrue(getOrderResponse.isSuccess());
         Assert.assertEquals(ingredients, getOrderResponse.getOrders().get(0).getIngredients());
+    }
+
+    @After
+    public void deleteUser() {
+        String accessToken = MakeOrderTest.authUser(password, email);
+        given()
+                .header("authorization", accessToken)
+                .delete("/api/auth/user");
     }
 }
