@@ -1,17 +1,11 @@
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import pojo.RegisterRequest;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static io.restassured.RestAssured.given;
 
 @RunWith(Parameterized.class)
 @Feature(value = "Не заполнено одно из обязательных полей")
