@@ -1,8 +1,8 @@
 package pojo;
 
-public class OrderResponse {
+public class MakeOrderResponse {
     private String name;
-    private Order order;
+    private OrderNumber order;
     private boolean success;
     private String message;
 
@@ -10,7 +10,7 @@ public class OrderResponse {
         return name;
     }
 
-    public Order getOrder() {
+    public OrderNumber getOrder() {
         return order;
     }
 

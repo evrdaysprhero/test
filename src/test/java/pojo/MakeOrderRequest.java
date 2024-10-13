@@ -2,10 +2,10 @@ package pojo;
 
 import java.util.List;
 
-public class OrderRequest {
+public class MakeOrderRequest {
     private List<String> ingredients;
 
-    public OrderRequest(List<String> ingredients) {
+    public MakeOrderRequest(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 }

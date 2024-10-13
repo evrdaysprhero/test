@@ -16,7 +16,7 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 
 @Story("Создание заказа")
-public class OrderTest {
+public class MakeOrderTest {
     private String password;
     private String email;
 
@@ -35,7 +35,7 @@ public class OrderTest {
     }
 
     @Step("Авторизоваться")
-    public String authUser(String password, String email) {
+    public static String authUser(String password, String email) {
         LoginRequest loginRequest = new LoginRequest(password, email);
 
         RegisterResponse registerResponse =  LoginTest
@@ -47,7 +47,7 @@ public class OrderTest {
     }
 
     @Step("Вызов /api/orders с авторизацией")
-    public static Response postOrders(OrderRequest order, String accessToken) {
+    public static Response postOrders(MakeOrderRequest order, String accessToken) {
         return given()
                 .header("Content-type", "application/json")
                 .header("authorization", accessToken)
@@ -56,7 +56,7 @@ public class OrderTest {
     }
 
     @Step("Вызов /api/orders без авторизации")
-    public static Response postOrders(OrderRequest order) {
+    public static Response postOrders(MakeOrderRequest order) {
         return given()
                 .header("Content-type", "application/json")
                 .body(order)
@@ -77,14 +77,14 @@ public class OrderTest {
         String accessToken = authUser(password, email);
 
         //создание заказа
-        OrderRequest order = new OrderRequest(List.of("61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6e", "61c0c5a71d1f82001bdaaa6c"));
+        MakeOrderRequest order = new MakeOrderRequest(List.of("61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6e", "61c0c5a71d1f82001bdaaa6c"));
         Response response = postOrders(order, accessToken);
         checkResponseCode(response, 200);
 
         //проверка
-        OrderResponse orderResponse = response
+        MakeOrderResponse orderResponse = response
                 .body()
-                .as(OrderResponse.class);
+                .as(MakeOrderResponse.class);
         Assert.assertTrue("Заказ не создан", orderResponse.isSuccess());
 
     }
@@ -94,14 +94,14 @@ public class OrderTest {
     public void makeOrderNoAuthSuccess() {
 
         //создание заказа
-        OrderRequest order = new OrderRequest(List.of("61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6e", "61c0c5a71d1f82001bdaaa6c"));
+        MakeOrderRequest order = new MakeOrderRequest(List.of("61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6e", "61c0c5a71d1f82001bdaaa6c"));
         Response response = postOrders(order);
         checkResponseCode(response, 200);
 
         //проверка
-        OrderResponse orderResponse = response
+        MakeOrderResponse orderResponse = response
                 .body()
-                .as(OrderResponse.class);
+                .as(MakeOrderResponse.class);
         Assert.assertTrue("Заказ не создан", orderResponse.isSuccess());
 
     }
@@ -111,14 +111,14 @@ public class OrderTest {
     public void makeOrderNoIngredintsFail() {
 
         //создание заказа
-        OrderRequest order = new OrderRequest(null);
+        MakeOrderRequest order = new MakeOrderRequest(null);
         Response response = postOrders(order);
         checkResponseCode(response, 400);
 
         //проверка
-        OrderResponse orderResponse = response
+        MakeOrderResponse orderResponse = response
                 .body()
-                .as(OrderResponse.class);
+                .as(MakeOrderResponse.class);
         Assert.assertEquals("Ingredient ids must be provided", orderResponse.getMessage());
 
     }
@@ -128,7 +128,7 @@ public class OrderTest {
     public void makeOrderWrongIngredintsFail() {
 
         //создание заказа
-        OrderRequest order = new OrderRequest(List.of("61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6e", "0000"));
+        MakeOrderRequest order = new MakeOrderRequest(List.of("61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6e", "0000"));
         Response response = postOrders(order);
         checkResponseCode(response, 500);
 

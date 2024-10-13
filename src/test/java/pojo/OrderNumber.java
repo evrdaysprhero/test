@@ -1,6 +1,6 @@
 package pojo;
 
-public class Order {
+public class OrderNumber {
     private Integer number;
 
     public Integer getNumber() {
